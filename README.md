@@ -1,5 +1,5 @@
-# Introduction 
-Script to setup what is needed in wsl1 and wsl2
+# Introduction
+Script to setup what is needed in wsl2
 
 # Getting Started
 First copy the ssh key from windows and set rights
