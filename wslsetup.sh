@@ -2,23 +2,21 @@
 
 #WSL2 Ubuntu clean install with zsh and oh my zsh
 
-# Prerequisite
-# mkdir ~/.ssh
-# cp /mnt/d/Documents/Diverse/keys/ssh/* .ssh/
-# chmod 600 .ssh/*
-
 sudo apt-get update && sudo apt-get full-upgrade -y
 sudo apt install mc inetutils-tools fzf bat -y
 
 ## Maybe 1password cli
 
 #To use rancher-desktop with wsl docker (not needed for nerdctl and containerd)
+Install docker locally so you use rancher-desktop from windows
+sudo sh ./get-docker.sh
 sudo addgroup --system docker
 sudo adduser $USER docker
-newgrp docker
+
+# Maybe using rancher-desktop docker instances?  This is for when using containerd
 # And something needs to be done so $USER always runs in group `docker` on the `Ubuntu` WSL
-sudo chown root:docker /var/run/docker.sock   #Is this still needed when running rancher-desktop?
-sudo chmod g+w /var/run/docker.sock
+# sudo chown root:docker /var/run/docker.sock   #Is this still needed when running rancher-desktop?
+# sudo chmod g+w /var/run/docker.sock
 
 #zsh stuff
 sudo apt install zsh -y
@@ -72,14 +70,11 @@ pipx install jrnl
 ####  To solve errors around unsecure kubeconfigs
 # On WSL Linux create a etc/wsl.conf   Then wsl --terminate ubuntu and wait 8 seconds
 
-[automount]
-enabled = true
-options = "metadata,umask=22,fmask=11"
+sudo cp wsl.conf /etc/
 
 # Then change rights on the link
 chmod go-r /mnt/c/Users/lars/.kube/config
 chmod 700 /mnt/c/Users/Lars/.kube/config
-
 
 
 #Kubectl locally
@@ -93,3 +88,18 @@ sudo apt-get install -y kubectl
 echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/lars/.zprofile
 sudo apt-get install build-essential
 brew install gcc
+
+
+#Github cli
+type -p curl >/dev/null || (sudo apt update && sudo apt install curl -y)
+curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+&& sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+&& sudo apt update \
+&& sudo apt install gh -y
+
+# ACT run github actions locally
+brew install act
+
+## Mangler
+###  Mangler der maaske noget mere command completion scriptet her?
