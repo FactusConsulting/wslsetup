@@ -49,7 +49,6 @@ sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
 #Flux
 curl -s https://fluxcd.io/install.sh | sudo bash
 
-
 git config --global --add safe.directory '*'
 git config --global user.name "Lars W. Andersen"
 git config --global user.email "lars@factus.dk"
