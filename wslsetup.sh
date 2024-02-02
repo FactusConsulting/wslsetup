@@ -8,15 +8,16 @@ sudo apt install mc inetutils-tools fzf bat -y
 ## Maybe 1password cli
 
 #To use rancher-desktop with wsl docker (not needed for nerdctl and containerd)
-Install docker locally so you use rancher-desktop from windows
+# Install docker locally so you use rancher-desktop from windows
+curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh ./get-docker.sh
 sudo addgroup --system docker
 sudo adduser $USER docker
 
 
 #Eller bare brug podman  og set d som alias til podman som
-sudo apt install podman
-podman completion -f "${fpath[1]}/_podman" zsh
+#sudo apt install podman
+# podman completion -f "${fpath[1]}/_podman" zsh
 
 # Maybe using rancher-desktop docker instances?  This is for when using containerd
 # And something needs to be done so $USER always runs in group `docker` on the `Ubuntu` WSL
@@ -84,7 +85,7 @@ chmod 700 /mnt/c/Users/Lars/.kube/config
 #Kubectl locally
 sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://dl.k8s.io/apt/doc/apt-key.gpg
 echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
-sudo apt-get update
+sudo apt-get update -y
 sudo apt-get install -y kubectl
 
 ######  Brew  #################
