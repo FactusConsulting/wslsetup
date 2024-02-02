@@ -1,21 +1,14 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH:/home/lars/.local/bin
-# export PATH=$PATH:/usr/local/go/bin
-# chmod 700 /mnt/c/Users/lars/.kube/config
-# chmod 644 ~/.kube/config
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-
-#ZSH_THEME="jonathan"
 ZSH_THEME="robbyrussell"
-#ZSH_THEME="random"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -38,6 +31,11 @@ ZSH_THEME="robbyrussell"
 # Uncomment the following line to change how often to auto-update (in days).
 # zstyle ':omz:update' frequency 13
 
+source ~/source/zsh-z/zsh-z.plugin.zsh
+autoload -U compinit && compinit
+zstyle ':completion:*' menu select
+
+
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS="true"
 
@@ -54,8 +52,7 @@ ZSH_THEME="robbyrussell"
 # You can also set it to another string to have that shown instead of the default red dots.
 # e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
 # Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-
-COMPLETION_WAITING_DOTS="true"
+# COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -64,11 +61,11 @@ COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
-# You can set one of the optional three formats:
+# You can set one of the op tional three formats:
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
-HIST_STAMPS="mm/dd/yyyy"
+# HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -78,14 +75,6 @@ HIST_STAMPS="mm/dd/yyyy"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-
-plugins=(git docker ansible cp dotnet helm kubectl kubectx kube-ps1 pip python zsh-syntax-highlighting)
-
-source $ZSH/oh-my-zsh.sh
-source ~/source/zsh-z/zsh-z.plugin.zsh
-source ~/source/kube-ps1/kube-ps1.sh
-PROMPT='$(kube_ps1)'$PROMPT
-
 
 # User configuration
 
@@ -113,6 +102,15 @@ PROMPT='$(kube_ps1)'$PROMPT
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+
+plugins=(git docker ansible cp dotnet helm kubectl kubectx kube-ps1 pip python zsh-syntax-highlighting)
+
+source $ZSH/oh-my-zsh.sh
+source ~/source/zsh-z/zsh-z.plugin.zsh
+source ~/source/kube-ps1/kube-ps1.sh
+PROMPT='$(kube_ps1)'$PROMPT
+
+command -v flux >/dev/null && . <(flux completion zsh)
 
 
 alias h=history
@@ -143,17 +141,5 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
-export KUBECONFIG=/mnt/c/Users/lars/.kube/config:/mnt/d/Documents/kubeconfigs/homek8s.yaml:/mnt/d/Documents/kubeconfigs/homek8s.oidc.yaml:~/.kube/config
-export ANSIBLE_NOCOWS=1
-
-source ~/source/zsh-z/zsh-z.plugin.zsh
-autoload -U compinit && compinit
-zstyle ':completion:*' menu select
-
-
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
-
-#export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
-#export PATH="$PATH:/mnt/c/Program Files/Oracle/VirtualBox"
-#export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
