@@ -118,5 +118,6 @@ brew install derailed/k9s/k9s
 brew tap weaveworks/tap
 brew install weaveworks/tap/gitops
 
+brew install derailed/popeye/popeye
 ## Mangler
 ###  Mangler der maaske noget mere command completion scriptet her?
