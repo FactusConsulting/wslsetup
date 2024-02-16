@@ -66,7 +66,6 @@ git config --global --add safe.directory '*'
 git config --global user.name "Lars W. Andersen"
 git config --global user.email "lars@factus.dk"
 
-curl -sS https://webinstall.dev/k9s | bash
 
 # pipx
 python3 -m pip install --user pipx
@@ -112,6 +111,12 @@ curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo 
 
 # ACT run github actions locally
 brew install act
+
+#Other stuff
+brew install derailed/k9s/k9s
+
+brew tap weaveworks/tap
+brew install weaveworks/tap/gitops
 
 ## Mangler
 ###  Mangler der maaske noget mere command completion scriptet her?
