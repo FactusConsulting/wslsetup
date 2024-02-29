@@ -15,6 +15,8 @@ sudo addgroup --system docker
 sudo adduser $USER docker
 
 
+
+
 #Eller bare brug podman  og set d som alias til podman som
 #sudo apt install podman
 # podman completion -f "${fpath[1]}/_podman" zsh
@@ -23,6 +25,13 @@ sudo adduser $USER docker
 # And something needs to be done so $USER always runs in group `docker` on the `Ubuntu` WSL
 # sudo chown root:docker /var/run/docker.sock   #Is this still needed when running rancher-desktop?
 # sudo chmod g+w /var/run/docker.sock
+
+######  Brew  #################
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/lars/.zprofile
+sudo apt-get install build-essential
+brew install gcc
+
 
 #zsh stuff
 sudo apt install zsh -y
@@ -53,7 +62,7 @@ sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
 sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
 
 #Flux
-curl -s https://fluxcd.io/install.sh | sudo bash
+brew install fluxcd/tap/flux
 
 # Vault
 sudo apt update && sudo apt install gpg wget
@@ -75,7 +84,7 @@ sudo apt install python3.10-venv
 #jrnl
 pipx install jrnl
 # /mnt/d/Documents/jrnl/journal.txt
-# nano edit ~/.config/jrnl/jrnl.yaml  og angiv nano som editor
+# nano edit ca  og angiv nano som editor   eller code med "code --wait"
 
 
 ####  To solve errors around unsecure kubeconfigs
@@ -94,11 +103,6 @@ echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https:/
 sudo apt-get update -y
 sudo apt-get install -y kubectl
 
-######  Brew  #################
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/lars/.zprofile
-sudo apt-get install build-essential
-brew install gcc
 
 
 #Github cli
