@@ -8,7 +8,8 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+ZSH_THEME="gnzh"
+# ZSH_THEME="robbyrussell"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -141,5 +142,7 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
+export KUBECONFIG=$(find $HOME/.kube -type f \( -name "*.yaml" -o -name "*k3d*" -o -name "config" \) -print0 | tr '\0' ':')$HOME/.kube/config
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+autoload -U compinit; compinit
