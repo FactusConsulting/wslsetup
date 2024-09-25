@@ -18,4 +18,15 @@ TODO: move this to an ansible script instead, except that we need to install ans
 
 he .ssh directory permissions should be 700 (drwx------).  The public key (.pub file) should be 644 (-rw-r--r--). The private key (id_rsa) on the client host, and the authorized_keys file on the server, should be 600 (-rw-------).
 
-#test3
+
+## Cleaning up and minimizing size
+vhdx File is found here on my machine "C:\Users\larsm\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc\LocalState\ext4.vhdx"
+```
+wsl --shutdown
+
+diskpart
+
+DISKPART> select vdisk file="C:\Users\larsm\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc\LocalState\ext4.vhdx"
+
+DISKPART> compact vdisk
+```
