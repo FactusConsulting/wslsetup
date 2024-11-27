@@ -117,7 +117,11 @@ source /home/lars/.oh-my-zsh/plugins/zaw/zaw.zsh
 bindkey '^r' zaw-history
 # CTRL-B will pull up zaw-git-branches which will search your current git branches and switch (git checkout) to the branch you select when you hit enter.
 bindkey '^b' zaw-git-branches
-
+zstyle ':filter-select:highlight' matched fg=green
+zstyle ':filter-select' max-lines 6
+zstyle ':filter-select' case-insensitive yes # enable case-insensitive
+zstyle ':filter-select' extended-search yes # see below
+zstyle ':filter-select' hist-find-no-dups yes # ignore duplicates in history source
 
 command -v flux >/dev/null && . <(flux completion zsh)
 
