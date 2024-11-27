@@ -38,7 +38,7 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 
 # Setup syntax higlighting
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
-git clone github.com/zsh-users/zaw.git ~/.oh-my-zsh/plugins/zaw
+git clone git@github.com:zsh-users/zaw.git ~/.oh-my-zsh/plugins/zaw
 
 
 mkdir ~/source
