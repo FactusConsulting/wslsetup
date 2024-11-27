@@ -8,8 +8,8 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="gnzh"
 # ZSH_THEME="robbyrussell"
+ZSH_THEME="gnzh"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -104,14 +104,31 @@ zstyle ':completion:*' menu select
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 
-plugins=(git docker ansible cp dotnet helm kubectl kubectx kube-ps1 pip python zsh-syntax-highlighting)
+plugins=(git zaw docker ansible cp dotnet helm kubectl kubectx kube-ps1 pip python zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 source ~/source/zsh-z/zsh-z.plugin.zsh
 source ~/source/kube-ps1/kube-ps1.sh
 PROMPT='$(kube_ps1)'$PROMPT
 
+# zaw
+source /home/lars/.oh-my-zsh/plugins/zaw/zaw.zsh
+# CTRL-R will pull up zaw-history (backwards zsh history search)
+bindkey '^r' zaw-history
+# CTRL-B will pull up zaw-git-branches which will search your current git branches and switch (git checkout) to the branch you select when you hit enter.
+bindkey '^b' zaw-git-branches
+
+
 command -v flux >/dev/null && . <(flux completion zsh)
+
+
+gitui-ssh() {
+  key="${1:-$HOME/.ssh/id_rsa_06-2022}"
+  eval "$(ssh-agent)" \
+    && ssh-add "$key" \
+    && command gitui "${@:2}" \
+    && eval "$(ssh-agent -k)"
+}
 
 
 alias h=history
@@ -141,12 +158,13 @@ alias kn='kubens'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+alias multipass='multipass.exe'
 
 export PATH="$PATH:/mnt/c/Program Files/Oracle/VirtualBox"
 export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
 export VAGRANT_DISABLE_STRICT_DEPENDENCY_ENFORCEMENT=1
-
 export KUBECONFIG=$(find $HOME/.kube -type f \( -name "*.yaml" -o -name "*k3d*" -o -name "config" \) -print0 | tr '\0' ':')$HOME/.kube/config
+
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
 autoload -U compinit; compinit

@@ -32,13 +32,14 @@ echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/lars/.zpr
 sudo apt-get install build-essential
 brew install gcc
 
-
 #zsh stuff
 sudo apt install zsh -y
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Setup syntax higlighting
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
+git clone github.com/zsh-users/zaw.git ~/.oh-my-zsh/plugins/zaw
+
 
 mkdir ~/source
 cd ~/source
