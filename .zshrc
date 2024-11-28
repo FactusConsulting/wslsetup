@@ -33,6 +33,7 @@ ZSH_THEME="gnzh"
 # zstyle ':omz:update' frequency 13
 
 source ~/source/zsh-z/zsh-z.plugin.zsh
+
 autoload -U compinit && compinit
 zstyle ':completion:*' menu select
 
@@ -107,7 +108,6 @@ zstyle ':completion:*' menu select
 plugins=(git zaw docker ansible cp dotnet helm kubectl kubectx kube-ps1 pip python zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
-source ~/source/zsh-z/zsh-z.plugin.zsh
 source ~/source/kube-ps1/kube-ps1.sh
 PROMPT='$(kube_ps1)'$PROMPT
 
@@ -171,4 +171,3 @@ export KUBECONFIG=$(find $HOME/.kube -type f \( -name "*.yaml" -o -name "*k3d*" 
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
-autoload -U compinit; compinit
