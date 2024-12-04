@@ -134,6 +134,24 @@ gitui-ssh() {
     && eval "$(ssh-agent -k)"
 }
 
+function vaultsetup() {
+  if [ $# -ne 1 ]; then
+    echo "Usage: VaultSetup <vault_url>"
+    return 1
+  fi
+
+  export VAULT_ADDR="$1"
+
+  # Prompt for the token without echoing input
+  echo -n "Enter your Vault token: "
+  read -s VAULT_TOKEN
+  echo
+
+  export VAULT_TOKEN
+
+  echo "Vault CLI configured with VAULT_ADDR='$VAULT_ADDR'"
+}
+
 
 alias h=history
 alias nas='ssh lars@nas.local -p 22000'
