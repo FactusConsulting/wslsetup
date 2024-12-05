@@ -152,6 +152,32 @@ function vaultsetup() {
   echo "Vault CLI configured with VAULT_ADDR='$VAULT_ADDR'"
 }
 
+function ansiblesetup() {
+  # Prompt for the become password
+  echo -n "Enter your Ansible become password: "
+  read -s ANSIBLE_BECOME_PASS
+  echo
+
+  # Export the password as an environment variable
+  export ANSIBLE_BECOME_PASS
+
+  # Prompt for the Vault password
+  echo -n "Enter your Ansible Vault password: "
+  read -s ANSIBLE_VAULT_PASSWORD
+  echo
+
+  # Write the Vault password to a temporary file
+  echo "$ANSIBLE_VAULT_PASSWORD" > ~/.vault_pass.txt
+  chmod 600 ~/.vault_pass.txt
+
+  # Export the Vault password file path as an environment variable
+  export ANSIBLE_VAULT_PASSWORD_FILE=~/.vault_pass.txt
+
+  echo "Environment variables set."
+}
+
+
+
 
 alias h=history
 alias nas='ssh lars@nas.local -p 22000'
