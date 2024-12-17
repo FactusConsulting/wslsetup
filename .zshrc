@@ -177,6 +177,20 @@ function ansiblesetup() {
 }
 
 
+# Function: dsh — Docker SH
+# Usage: dsh <container-id-or-name>
+# Example: dsh my-container
+
+function dsh() {
+    if [[ -z "$1" ]]; then
+        echo "Usage: dsh <container-id-or-name>"
+        return 1
+    fi
+
+    # Launches an interactive sh shell in the specified container
+    docker exec -it "$1" sh
+}
+
 
 
 alias h=history
