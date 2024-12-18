@@ -191,8 +191,6 @@ function dsh() {
     docker exec -it "$1" sh
 }
 
-
-
 alias h=history
 alias nas='ssh lars@nas.local -p 22000'
 alias winhome='cd /mnt/d/source'
@@ -203,8 +201,6 @@ alias u4='ssh lars@ubuntusrv04.local'
 alias p1='ssh pi@printer01.local'
 alias p2='ssh pi@printer02.local'
 alias v1='ssh pi@voron1.local'
-alias o2='ssh pi@octopi2.local'
-alias o4='ssh pi@octopi4.local'
 alias pihole1='ssh pi@pihole1.local'
 alias pihole2='ssh pi@pihole2.local'
 
@@ -225,6 +221,7 @@ alias multipass='multipass.exe'
 export PATH="$PATH:/mnt/c/Program Files/Oracle/VirtualBox"
 export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
 export VAGRANT_DISABLE_STRICT_DEPENDENCY_ENFORCEMENT=1
+
 export KUBECONFIG=$(find $HOME/.kube -type f \( -name "*.yaml" -o -name "*k3d*" -o -name "config" \) -print0 | tr '\0' ':')$HOME/.kube/config
 
 # Generated for envman. Do not edit.
