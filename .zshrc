@@ -115,6 +115,7 @@ PROMPT='$(kube_ps1)'$PROMPT
 source /home/lars/.oh-my-zsh/plugins/zaw/zaw.zsh
 # CTRL-R will pull up zaw-history (backwards zsh history search)
 bindkey '^r' zaw-history
+bindkey -M filterselect '^E' accept-search
 # CTRL-B will pull up zaw-git-branches which will search your current git branches and switch (git checkout) to the branch you select when you hit enter.
 bindkey '^b' zaw-git-branches
 zstyle ':filter-select:highlight' matched fg=green
