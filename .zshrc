@@ -177,7 +177,6 @@ function ansiblesetup() {
   echo "Environment variables set."
 }
 
-
 # Function: dsh — Docker SH
 # Usage: dsh <container-id-or-name>
 # Example: dsh my-container
