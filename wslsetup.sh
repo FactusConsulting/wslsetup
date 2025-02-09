@@ -136,6 +136,7 @@ rm packages-microsoft-prod.deb
 sudo apt update && sudo apt install -y dotnet-sdk-8.0
 
 
+brew install act cloudflared  gitui  k9s kubernetes-cli libxcrypt openssl@3 skaffold trivy yq argocd flux gperf kind kustomize libyaml popeye talosctl  vagrant zlib ca-certificates  gitops k3d kubectx  libffi nvm ruby tilt yamlfmt
 
 # KREW for kubectl
 (
