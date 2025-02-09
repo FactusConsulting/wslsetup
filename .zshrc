@@ -126,6 +126,28 @@ zstyle ':filter-select' hist-find-no-dups yes # ignore duplicates in history sou
 
 command -v flux >/dev/null && . <(flux completion zsh)
 
+backupvoron1() {
+    echo "Fetching printer data from Voron1..."
+    scp -r pi@voron1.local:~/printer_data ~/printer_data_backup
+
+    if [ $? -eq 0 ]; then
+        echo "Successfully retrieved printer data."
+        echo "Copying data to NAS..."
+        scp -P 22000 -r ~/printer_data_backup/ lars@nas.local:/volume1/Main/voron1backup/
+
+        if [ $? -eq 0 ]; then
+            echo "Backup successful! Cleaning up local backup folder..."
+            rm -rf ~/printer_data_backup
+            echo "Cleanup completed."
+        else
+            echo "Failed to copy data to NAS."
+        fi
+    else
+        echo "Failed to fetch printer data from Voron1."
+    fi
+}
+
+
 
 gitui-ssh() {
   key="${1:-$HOME/.ssh/id_rsa_06-2022}"
@@ -212,7 +234,6 @@ alias n='nerdctl'
 alias kc='kubectx'
 alias kn='kubens'
 
-
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
@@ -222,7 +243,6 @@ export PATH="$PATH:/mnt/c/Program Files/Oracle/VirtualBox"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
 export VAGRANT_DISABLE_STRICT_DEPENDENCY_ENFORCEMENT=1
-
 export KUBECONFIG=$(find $HOME/.kube -type f \( -name "*.yaml" -o -name "*k3d*" -o -name "config" \) -print0 | tr '\0' ':')$HOME/.kube/config
 
 # Generated for envman. Do not edit.
