@@ -220,6 +220,7 @@ alias l='ls -CF'
 alias multipass='multipass.exe'
 
 export PATH="$PATH:/mnt/c/Program Files/Oracle/VirtualBox"
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
 export VAGRANT_DISABLE_STRICT_DEPENDENCY_ENFORCEMENT=1
 
