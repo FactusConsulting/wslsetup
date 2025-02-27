@@ -32,6 +32,8 @@ ZSH_THEME="gnzh"
 # Uncomment the following line to change how often to auto-update (in days).
 # zstyle ':omz:update' frequency 13
 
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
 source ~/source/zsh-z/zsh-z.plugin.zsh
 
 autoload -U compinit && compinit
@@ -112,6 +114,7 @@ source ~/source/kube-ps1/kube-ps1.sh
 PROMPT='$(kube_ps1)'$PROMPT
 
 # zaw
+
 source /home/lars/.oh-my-zsh/plugins/zaw/zaw.zsh
 # CTRL-R will pull up zaw-history (backwards zsh history search)
 bindkey '^r' zaw-history

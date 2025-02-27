@@ -27,10 +27,10 @@ sudo adduser $USER docker
 # sudo chmod g+w /var/run/docker.sock
 
 ######  Brew  #################
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/lars/.zprofile
-sudo apt-get install build-essential
-brew install gcc
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/lars/.zprofile
+  sudo apt-get install build-essential
+  brew install gcc
 
 #zsh stuff
 sudo apt install zsh -y
@@ -44,7 +44,7 @@ git clone git@github.com:zsh-users/zaw.git ~/.oh-my-zsh/plugins/zaw
 mkdir ~/source
 cd ~/source
 git clone git@github.com:agkozak/zsh-z.git ~/source/zsh-z
-git clone git@ssh.dev.azure.com:v3/Factus/Main/ansible ~/source/ansible
+git clone git@github.com:FactusConsulting/ansible.git ~/source/ansible
 # Get kubernetes context on cmd line
 sudo git clone https://github.com/jonmosco/kube-ps1.git ~/source/kube-ps1
 
