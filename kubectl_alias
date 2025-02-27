@@ -1,0 +1,154 @@
+# Kubectl aliases
+alias k="kubectl"
+alias ket="k get"
+alias kedit="k edit"
+alias kp="k patch"
+alias kdesc="k describe pod"
+alias kapp="k apply -f "
+alias klog="k logs -f"
+alias konf="k config"
+alias kpod="k get pod"
+alias kpods="k get pods --show-labels"
+alias ksvc="k get service"
+alias ksvcs="k get services --show-labels"
+alias kdep="k get deployment"
+alias kdeps="k get deployments --show-labels"
+alias kontexts="k config get-contexts"
+alias kontext="k config use-context"
+alias ktx="kontext"
+alias kroll="k rollout"
+alias kpvunclaim="k patch -p '{\"spec\":{\"claimRef\": null}}'"
+alias ktop="k top node"
+alias ktopn="ktop"
+alias ktopp="k top pods -A --sort-by=cpu | less"
+alias ktoppm="k top pods -A --sort-by=memory | less"
+alias kvaultlogs="k logs -f --tail 200 deployment/vault-secrets-operator-controller-manager -n vault-secrets-operator"
+alias kvaultrole="k edit ClusterRoleBinding/vault-auth-delegator"
+alias kfor="k port-forward"
+function kexec() {
+  kubectl exec --stdin --tty $@ -- /bin/bash
+}
+function kres() {
+  if [ "$#" -eq 0 ]; then
+    echo "How to use: kres <Namespace> [...args]"
+    return
+  fi
+  alias kres="kubectl api-resources --verbs=list --namespaced -o name | xargs -n 1 kubectl get --show-kind --ignore-not-found -n"
+}
+function kns() {
+  echo "Set kubectl context default namespace: ${1:-[none]}"
+  kubectl config set-context --current --namespace=$1
+}
+function kfixrancherlogs() {
+  eval "$(kubectl get preferences.management.cattle.io -A --field-selector metadata.name=logs-range -o jsonpath='{range .items[*]}{"kubectl -n "}{.metadata.namespace}{" delete preferences.management.cattle.io logs-range;"}{end}')"
+}
+function kron-suspend() {
+  all_args=("$@")
+  rest_args=("${all_args[@]:2}")
+  kubectl patch cronjobs $1 -p "{\"spec\" : {\"suspend\" : $2 }}" $rest_args
+}
+function krun() {
+  if [ "$#" -eq 0 ]; then
+    echo "How to use: krun <Image> [...args]"
+    return
+  fi
+  all_args=("$@")
+  rest_args=("${all_args[@]:1}")
+  kubectl run -i -t krun-tmp --restart=Never --rm --image=$1 $rest_args
+}
+function kdeploy() {
+  if [ "$#" -eq 0 ]; then
+    echo "How-to: kdeploy <Image> <?Name=image> <?Namespace=default>"
+    return
+  fi
+  template=""
+  image=$1
+  name="${2:-$image}"
+  namespace="${3:-default}"
+  set +a
+  yaml=$(eval "cat <<EOF
+$(<~"/.k8s-templates/deployment.yaml")
+  ")
+  echo $yaml | kubectl apply -f -
+}
+function kpvreclaim() {
+  if [ "$#" -eq 0 ]; then
+    echo "How-to: kpvreclaim <PVName> <ReclaimPolicy> (...args)"
+    return
+  fi
+  all_args=("$@")
+  rest_args=("${all_args[@]:2}")
+  kubectl patch $1 -p "{\"spec\":{\"persistentVolumeReclaimPolicy\":\"$2\"}}" $rest_args
+}
+function kscale() {
+  if [ "$#" -eq 0 ]; then
+    echo "How-to: kscale <DeploymentName> <#-of-Replicas> (...args)"
+    return
+  fi
+  all_args=("$@")
+  rest_args=("${all_args[@]:2}")
+  kubectl scale deployment $1 --replicas=$2 $rest_args
+}
+function kpvnuke() {
+  if [ "$#" -eq 0 ]; then
+    echo "How to use: kpvnuke <PVName>"
+    return
+  fi
+  all_args=("$@")
+  rest_args=("${all_args[@]:1}")
+  kpvunclaim pv/$1
+  kubectl patch -p "{\"metadata\":{\"finalizers\":null}}" pv/$1
+  kubectl delete pv/$1
+}
+function kreflect() {
+  if [ "$#" -eq 0 ]; then
+    echo "How to use: kreflect <ResourceName> <true/false> (...args)"
+    return
+  fi
+  all_args=("$@")
+  rest_args=("${all_args[@]:2}")
+  kubectl annotate --overwrite $1 reflector.v1.k8s.emberstack.com/reflection-allowed=$2 $rest_args
+  kubectl annotate --overwrite $1 reflector.v1.k8s.emberstack.com/reflection-auto-enabled=$2 $rest_args
+}
+function ketall {
+  for i in $(kubectl api-resources --verbs=list --namespaced -o name | grep -v "events.events.k8s.io" | grep -v "events" | sort | uniq); do
+    echo "Resource:" $i
+    kubectl -n ${1} get --ignore-not-found ${i}
+  done
+  }
+
+# HELM utilities
+alias hei='helm install'
+alias hug='helm upgrade'
+#alias hun='helm uninstall'
+function helm {
+  if [[ "${@:1:1}" == "uninstall" ]]; then
+    hun "${@:2}"
+  else
+    command helm "$@"
+  fi
+}
+function hun {
+  CUR_CONTEXT=$(kubectl config current-context | tr '[:lower:]' '[:upper:]')
+  RED='\033[0;31m'
+  NC='\033[0m' # No Color
+  echo "This is the No-Accidental-Uninstall-From-Production-Police! please check your context!"
+  echo "Current context is: $RED$CUR_CONTEXT$NC"
+  read "?Are you sure you want to continue? (press y):"
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+    command helm uninstall "$@"
+  fi
+}
+function kdebug {
+  if [ "$#" -eq 0 ]; then
+    echo "How to use: kdebug <PodName> <Image> <Container>"
+    echo "Suggested images:"
+    echo "\tbusybox:alpine"
+    echo "\tlightruncom/koolkits"
+    echo "\twbitt/network-multitool"
+    echo "\tnicolaka/netshoot"
+    return
+  fi
+  debugImage="${2:-busybox}"
+  kubectl debug -it $1 --image=$debugImage --image-pull-policy=IfNotPresent --target=$3
+}
