@@ -203,3 +203,31 @@ sudo apt install -y sshpass
 
 # To make ssh ans ansible resolve servers by name update
 # /etc/nsswitch.conf and add dns before mdns4_minimal [NOTFOUND=return]
+
+
+# Howdy
+
+sudo add-apt-repository ppa:ubuntuhandbook1/howdy
+sudo apt update
+sudo apt install howdy
+sudo apt install v4l-utils
+sudo apt install python3-numpy python3-opencv python3-dlib libpam-python dlib-models libinireader0
+v4l2-ctl --list-devices
+sudo apt install ffmpeg
+ffplay /dev/video0
+
+# For sudo in terminal
+pip3 install opencv-python --break-system-packages
+pip3 install dlib --break-system-packages
+
+# Using multiple cameras
+sudo nano /lib/udev/rules.d/99-howdy-camera-select.rules
+# add these two lines
+# KERNEL=="video2", SYMLINK+="videohowdy"
+# KERNEL=="video0", SYMLINK+="videohowdy"
+#
+
+# Then run this command to reload the udev rules and restart howdy
+sudo udevadm trigger
+# then reboot
+# also remember to howdy config and ignore the closed lid
