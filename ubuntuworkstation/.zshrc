@@ -246,12 +246,10 @@ alias limactl='/opt/rancher-desktop/resources/resources/linux/lima/bin/limactl'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-alias multipass='multipass.exe'
 
-export PATH="$PATH:/mnt/c/Program Files/Oracle/VirtualBox"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
-export VAGRANT_DISABLE_STRICT_DEPENDENCY_ENFORCEMENT=1
+export PATH="$PATH:/home/lars/.dotnet/tools"
+
 export KUBECONFIG=$(find $HOME/.kube -type f \( -name "*.yaml" -o -name "*k3d*" -o -name "config" \) -print0 | tr '\0' ':')$HOME/.kube/config
 
 

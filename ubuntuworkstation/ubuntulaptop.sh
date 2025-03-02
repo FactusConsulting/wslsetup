@@ -238,3 +238,5 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 # go
 brew install go
+
+sudo apt install gnome-tweaks gnome-shell-extensions -y
