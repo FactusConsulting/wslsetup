@@ -232,3 +232,9 @@ sudo nano /lib/udev/rules.d/99-howdy-camera-select.rules
 sudo udevadm trigger
 # then reboot
 # also remember to howdy config and ignore the closed lid
+
+# Rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+# go
+brew install go

@@ -106,11 +106,13 @@ zstyle ':completion:*' menu select
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 
+
 plugins=(git zaw docker ansible cp dotnet helm kubectl kubectx kube-ps1 pip python zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 source ~/source/kube-ps1/kube-ps1.sh
 PROMPT='$(kube_ps1)'$PROMPT
+. "$HOME/.cargo/env"
 
 # zaw
 source /home/lars/.oh-my-zsh/plugins/zaw/zaw.zsh
