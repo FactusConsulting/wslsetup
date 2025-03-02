@@ -15,6 +15,11 @@ sudo sh ./get-docker.sh
 sudo addgroup --system docker
 sudo adduser $USER docker
 
+# for docker login initialize a pass
+# gfy0NRX9bzp5zpa@vkw
+# pass init <your_generated_gpg-id_public_key>
+
+
 
 # Eller bare brug podman  og set d som alias til podman som
 # sudo apt install podman
