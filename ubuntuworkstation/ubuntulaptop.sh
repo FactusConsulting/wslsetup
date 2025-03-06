@@ -247,3 +247,18 @@ echo "deb [arch=amd64 signed-by=/usr/share/keyrings/oracle-virtualbox-2016.gpg] 
 sudo apt update
 sudo apt install virtualbox-7.1
 sudo usermod -aG vboxusers $USER
+
+
+
+
+# Docker pull secret
+mkdir -p ~/.kube/secrets
+chmod 700 ~/.kube/secrets
+
+kubectl create secret docker-registry nexuscr-secret \
+  --docker-server=nexuscr.factus.dk \
+  --docker-username='docker' \
+  --docker-password='MYSECRETGOESHERE' \
+  --dry-run=client -o yaml > ~/.kube/secrets/nexuscr-secret.yaml
+
+

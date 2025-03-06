@@ -80,7 +80,6 @@ zstyle ':completion:*' menu select
 # Add wisely, as too many plugins slow down shell startup.
 
 # User configuration
-
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -105,8 +104,6 @@ zstyle ':completion:*' menu select
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-
-
 plugins=(git zaw docker ansible cp dotnet helm kubectl kubectx kube-ps1 pip python zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
@@ -127,7 +124,6 @@ zstyle ':filter-select' case-insensitive yes # enable case-insensitive
 zstyle ':filter-select' extended-search yes # see below
 zstyle ':filter-select' hist-find-no-dups yes # ignore duplicates in history source
 
-command -v flux >/dev/null && . <(flux completion zsh)
 
 backupvoron1() {
     echo "Fetching printer data from Voron1..."
@@ -149,8 +145,6 @@ backupvoron1() {
         echo "Failed to fetch printer data from Voron1."
     fi
 }
-
-
 
 gitui-ssh() {
   key="${1:-$HOME/.ssh/id_rsa_06-2022}"
@@ -206,6 +200,14 @@ function ansiblesetup() {
 # Usage: dsh <container-id-or-name>
 # Example: dsh my-container
 
+
+####### Kubernetes and docker stuff start #######
+
+function apply-nexuscr-secret() {
+  local ns="${1:-default}"
+  kubectl apply -f ~/.kube/secrets/nexuscr-secret.yaml -n "$ns"
+}
+
 function dsh() {
     if [[ -z "$1" ]]; then
         echo "Usage: dsh <container-id-or-name>"
@@ -216,6 +218,21 @@ function dsh() {
     docker exec -it "$1" sh
 }
 
+alias k='kubectl'
+alias d='docker'
+alias n='nerdctl'
+alias kc='kubectx'
+alias kn='kubens'
+alias limactl='/opt/rancher-desktop/resources/resources/linux/lima/bin/limactl'
+
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+export KUBECONFIG=$(find $HOME/.kube -type f \( -name "*.yaml" -o -name "*k3d*" -o -name "config" \) -print0 | tr '\0' ':')$HOME/.kube/config
+command -v flux >/dev/null && . <(flux completion zsh)
+
+####### Kubernetes and docker stuff end #######
+
+
+
 function hdmi1(){
   ddcutil -b 13 setvcp 0x60 0x11
 }
@@ -223,7 +240,6 @@ function hdmi1(){
 
 alias h=history
 alias nas='ssh lars@nas.local -p 22000'
-alias winhome='cd /mnt/d/source'
 alias u1='ssh lars@ubuntusrv01.local'
 alias u2='ssh lars@ubuntusrv02.local'
 alias u3='ssh lars@ubuntusrv03.local'
@@ -233,25 +249,13 @@ alias p2='ssh pi@printer02.local'
 alias v1='ssh pi@voron1.local'
 alias pihole1='ssh pi@pihole1.local'
 alias pihole2='ssh pi@pihole2.local'
-
 alias cat='batcat'
 alias j='jrnl'
-alias k='kubectl'
-alias d='docker'
-alias n='nerdctl'
-alias kc='kubectx'
-alias kn='kubens'
-alias limactl='/opt/rancher-desktop/resources/resources/linux/lima/bin/limactl'
-
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
-export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 export PATH="$PATH:/home/lars/.dotnet/tools"
-
-export KUBECONFIG=$(find $HOME/.kube -type f \( -name "*.yaml" -o -name "*k3d*" -o -name "config" \) -print0 | tr '\0' ':')$HOME/.kube/config
-
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
